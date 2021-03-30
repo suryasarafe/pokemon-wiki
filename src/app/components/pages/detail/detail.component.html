@@ -1,0 +1,14 @@
+<p>Types</p>
+<ul class="list-group" *ngFor="let item of data.types">
+  <li class="list-group-item">{{item?.type?.name}}</li>
+</ul>
+
+<p>Abilities</p>
+<ul class="list-group" *ngFor="let item of data.abilities">
+  <li class="list-group-item">{{item?.ability?.name}}</li>
+</ul>
+
+<p>Moves</p>
+<ul class="list-group" *ngFor="let item of data.moves">
+  <li class="list-group-item">{{item?.move?.name}}</li>
+</ul>

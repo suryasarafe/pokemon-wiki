@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-md-3 mt-2" *ngFor="let item of list">
+    <div class="card">
+      <img class="card-img-top" [src]="source(item.url)" [alt]="item.name">
+      <div class="card-body">
+        <p class="card-text">{{item.name}}</p>
+        <button class="btn btn-primary" (click)="getDetail(item.url)">
+          URL
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
