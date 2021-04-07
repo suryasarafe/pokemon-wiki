@@ -1,14 +1,75 @@
-<p>Types</p>
-<ul class="list-group" *ngFor="let item of data.types">
-  <li class="list-group-item">{{item?.type?.name}}</li>
-</ul>
+<div class="row">
+  <div class="col-4">
+    <img class="card-img-top" [src]="data?.sprites?.front_default" [alt]="data.name">
+    <div class="text-center">
+      <ng-container *ngFor="let item of data.types">
+        <span class="badge ml-1" [ngClass]="getClass(item?.type?.name)">{{item?.type?.name}}</span>
+      </ng-container>
+    </div>
+  </div>
+  <div class="col-8">
+    <p>Basic Info</p>
+    <div class="row">
+      <div class="col-6">
+        <label class="capitalize">name</label>
+        <label class="form-control text-right">{{data?.name}}</label>
+      </div>
+      <div class="col-6">
+        <label class="capitalize">base experience</label>
+        <label class="form-control text-right">{{data?.base_experience}}</label>
+      </div>
+      <div class="col-6">
+        <label class="capitalize">height</label>
+        <label class="form-control text-right">{{data?.height}}</label>
+      </div>
+      <div class="col-6">
+        <label class="capitalize">weight</label>
+        <label class="form-control text-right">{{data?.weight}}</label>
+      </div>
+    </div>
+    <hr>
+    <p>Basic Stat</p>
+    <div class="row">
+      <div class="col-6" *ngFor="let item of data.stats">
+        <label class="capitalize">{{item?.stat?.name}}</label>
+        <label class="form-control text-right">{{item?.base_stat}}</label>
+      </div>
+    </div>
+  </div>
+</div>
 
-<p>Abilities</p>
-<ul class="list-group" *ngFor="let item of data.abilities">
-  <li class="list-group-item">{{item?.ability?.name}}</li>
-</ul>
+<hr>
 
 <p>Moves</p>
-<ul class="list-group" *ngFor="let item of data.moves">
-  <li class="list-group-item">{{item?.move?.name}}</li>
-</ul>
+<div class="row">
+  <div class="col-3 pb-1" *ngFor="let item of data.moves">
+    <span class="form-control">
+      {{item?.move?.name}}
+    </span>
+  </div>
+</div>
+
+<hr>
+
+<p>Image</p>
+<div class="row">
+  <ng-container *ngFor="let key of getKeyObject(data.sprites)">
+    <div class="col-4 pb-1" *ngIf="isUrl(data?.sprites[key])">
+      <div class="card">
+        <p class="card-title text-center capitalize">{{key}}</p>
+        <img class="card-img-top" [src]="data?.sprites[key]" [alt]="key">
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<hr>
+
+<p>Games Version</p>
+<div class="row">
+  <div class="col-3 pb-1" *ngFor="let item of data.game_indices">
+    <span class="form-control">
+      {{item?.version?.name}}
+    </span>
+  </div>
+</div>

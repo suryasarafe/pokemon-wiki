@@ -1,11 +1,26 @@
+<div class="card">
+  <div class="card-title">Pokemon</div>
+  <div class="card-content">
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-primary" (click)="getPokemonListNext(previousUrl)">Previous</button>
+        <button class="btn btn-primary" (click)="getPokemonListNext(nextUrl)">Next</button>
+      </div>
+      <div class="col">
+        <app-search></app-search>
+      </div>
+    </div>
+    
+  </div>
+</div>
 <div class="row">
   <div class="col-md-3 mt-2" *ngFor="let item of list">
     <div class="card">
       <img class="card-img-top" [src]="source(item.url)" [alt]="item.name">
-      <div class="card-body">
-        <p class="card-text">{{item.name}}</p>
-        <button class="btn btn-primary" (click)="getDetail(item.url)">
-          URL
+      <div class="card-body text-center">
+        <p class="card-text capitalize">{{item.name}}</p>
+        <button class="btn btn-primary" (click)="getDetail(item)">
+          See Detail
         </button>
       </div>
     </div>

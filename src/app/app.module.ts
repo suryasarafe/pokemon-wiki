@@ -16,6 +16,9 @@ import { FooterComponent } from './components/layout/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PokemonComponent } from './components/pages/pokemon/pokemon.component';
 import { DetailComponent } from './components/pages/detail/detail.component';
+import { SearchComponent } from './components/search/search.component';
+import { FormsModule } from '@angular/forms';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 @NgModule({
   declarations: [
@@ -27,12 +30,15 @@ import { DetailComponent } from './components/pages/detail/detail.component';
     FooterComponent,
     PokemonComponent,
     DetailComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
+    AutocompleteLibModule,
   ],
   providers: [BsDropdownModule, TooltipModule, ModalModule],
   bootstrap: [AppComponent]

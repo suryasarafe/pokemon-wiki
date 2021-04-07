@@ -1,0 +1,16 @@
+<div class="input-group">
+  <div class="form-outline">
+    <div class="ng-autocomplete">
+      <ng-autocomplete [data]="pokemonName" [searchKeyword]="keyword" (selected)='searching($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" placeholder="Search Pokemon">
+      </ng-autocomplete>
+
+      <ng-template #itemTemplate let-item>
+        <a [innerHTML]="item.name"></a>
+      </ng-template>
+
+      <ng-template #notFoundTemplate let-notFound>
+        <div [innerHTML]="notFound"></div>
+      </ng-template>
+    </div>
+  </div>
+</div>

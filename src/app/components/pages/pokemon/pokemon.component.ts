@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { PokemonName } from 'src/app/interfaces/default.interface';
+import { CommonService } from 'src/app/services/common.service';
 import { HttpRequestService } from 'src/app/services/http-request.service';
 import { environment } from 'src/environments/environment';
 
@@ -7,13 +12,24 @@ import { environment } from 'src/environments/environment';
   templateUrl: './pokemon.component.html',
   styleUrls: ['./pokemon.component.sass']
 })
-export class PokemonComponent implements OnInit {
-  list: [] = []
+export class PokemonComponent implements OnInit, OnDestroy {
+  private _destroyer = new Subject()
+  list: PokemonName[] = []
   limit: number = 8
+  nextUrl: string = ''
+  previousUrl: string = ''
 
   constructor(
-    private http: HttpRequestService
-  ) { }
+    private http: HttpRequestService,
+    private commonService: CommonService,
+    private router: Router
+  ) {
+    this.commonService.pokemonList.pipe(
+      takeUntil(this._destroyer)
+    ).subscribe(list => {
+      this.list = list
+    })
+  }
 
   ngOnInit() {
     this.getPokemonList(0, this.limit)
@@ -22,13 +38,20 @@ export class PokemonComponent implements OnInit {
   async getPokemonList(offset: number, limit: number) {
     const url = `${environment.baseUrl}pokemon?offset=${offset}&limit=${limit}`
     const result = await this.http.get(url)
-    this.list = result.results
-    console.log(this.list)
+    this.commonService.setPokemonList(result.results)
+    this.nextUrl = result.next
+    this.previousUrl = result.previous
   }
 
-  async getDetail(url) {
+  async getPokemonListNext(url) {
     const result = await this.http.get(url)
-    console.log(result)
+    this.commonService.setPokemonList(result.results)
+    this.nextUrl = result.next
+    this.previousUrl = result.previous
+  }
+
+  async getDetail(data) {
+    this.router.navigate([`/pokemon/${data.name}`])
   }
 
   source(url: string) {
@@ -38,5 +61,10 @@ export class PokemonComponent implements OnInit {
     } else {
       return ``
     }
+  }
+
+  ngOnDestroy() {
+    this._destroyer.next()
+    this._destroyer.complete()
   }
 }
